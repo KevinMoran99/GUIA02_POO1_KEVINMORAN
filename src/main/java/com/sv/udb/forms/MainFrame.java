@@ -40,6 +40,11 @@ public class MainFrame extends javax.swing.JFrame {
         btn2.setText("Ejercicio 2");
 
         btn3.setText("Ejercicio 3");
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
 
         btn4.setText("Ejercicio 4");
 
@@ -94,6 +99,12 @@ public class MainFrame extends javax.swing.JFrame {
         ej5.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        Frame3 ej3 = new Frame3();
+        ej3.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn3ActionPerformed
 
     /**
      * @param args the command line arguments
