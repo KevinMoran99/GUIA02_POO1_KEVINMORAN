@@ -36,8 +36,18 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btn1.setText("Ejercicio 1");
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
 
         btn2.setText("Ejercicio 2");
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
 
         btn3.setText("Ejercicio 3");
         btn3.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +115,18 @@ public class MainFrame extends javax.swing.JFrame {
         ej3.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        Frame1 ej1 = new Frame1();
+        ej1.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        Frame2 ej2 = new Frame2();
+        ej2.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn2ActionPerformed
 
     /**
      * @param args the command line arguments

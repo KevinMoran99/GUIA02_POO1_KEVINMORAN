@@ -5,8 +5,15 @@
  */
 package com.sv.udb.forms;
 
+import com.sv.udb.classes.common.ComponentMap;
 import com.sv.udb.classes.ej1.Ej1;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
+import java.awt.Component;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -20,10 +27,61 @@ public class Frame1 extends javax.swing.JFrame {
     
     Ej1 moneyList;
     
+    //Matriz que ayudara a acceder mas facilmente a los componentes
+    String[][] componentNameList;
+    
+    //Mapa que contiene todos los componentes
+    ComponentMap map;
+    
     public Frame1() {
         initComponents();
         moneyList = new Ej1();
+        
+        //Mapeando componentes
+        map = new ComponentMap(this);
+        
+        componentNameList = new String[][] {
+            {"Cent1", "0.01"},
+            {"Cent5", "0.05"},
+            {"Cent10", "0.1"},
+            {"Cent25", "0.25"},
+            {"Doll1", "1"},
+            {"Doll5", "5"},
+            {"Doll10", "10"},
+            {"Doll20", "20"},
+            {"Doll50", "50"},
+            {"Doll100", "100"},
+        };
+        
+        //Ocultando mensajes de error
         hideErrors();
+        
+        //Al presionar X en cualquier control, se muestra el total
+        KeyListener calculate = new KeyListener () {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_X) {
+                    DecimalFormat decim = new DecimalFormat("0.00");
+                    JOptionPane.showMessageDialog(null, "El total de dinero registrado en el cajero es de"
+                            + " $" + decim.format(moneyList.calculateSum()));
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        
+        };
+        
+        //Añadiendo listener a cada control
+        Component[] components = this.getContentPane().getComponents();
+        for (Component component: components) {
+            component.addKeyListener(calculate);
+        }
+        
+        
     }
 
     /**
@@ -67,10 +125,24 @@ public class Frame1 extends javax.swing.JFrame {
         errDoll20 = new javax.swing.JLabel();
         errDoll50 = new javax.swing.JLabel();
         errDoll100 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtCent1.setName("txtCent1"); // NOI18N
+        getContentPane().add(txtCent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 101, 38, -1));
+        txtCent1.getAccessibleContext().setAccessibleName("xD");
 
         jLabel1.setText("$00.01:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 81, -1, -1));
 
         btnReturn.setText("Regresar");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -78,24 +150,61 @@ public class Frame1 extends javax.swing.JFrame {
                 btnReturnActionPerformed(evt);
             }
         });
+        getContentPane().add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 89, -1));
 
         jLabel2.setText("$00.05:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 81, -1, -1));
 
         jLabel3.setText("$00.10:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 81, -1, -1));
 
         jLabel4.setText("$00.25:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 81, -1, -1));
 
         jLabel5.setText("$01.00:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 81, -1, -1));
 
         jLabel6.setText("$05.00:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 157, -1, -1));
 
         jLabel7.setText("$10.00:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 157, -1, -1));
 
         jLabel8.setText("$20.00:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 157, -1, -1));
 
         jLabel9.setText("$50.00:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 157, -1, -1));
 
         jLabel10.setText("$100.00:");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 157, -1, -1));
+
+        txtCent5.setName("txtCent5"); // NOI18N
+        getContentPane().add(txtCent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 101, 38, -1));
+
+        txtCent10.setName("txtCent10"); // NOI18N
+        getContentPane().add(txtCent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 101, 38, -1));
+
+        txtCent25.setName("txtCent25"); // NOI18N
+        getContentPane().add(txtCent25, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 101, 38, -1));
+
+        txtDoll1.setName("txtDoll1"); // NOI18N
+        getContentPane().add(txtDoll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 101, 38, -1));
+
+        txtDoll5.setName("txtDoll5"); // NOI18N
+        getContentPane().add(txtDoll5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 177, 38, -1));
+
+        txtDoll10.setName("txtDoll10"); // NOI18N
+        getContentPane().add(txtDoll10, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 177, 38, -1));
+
+        txtDoll20.setName("txtDoll20"); // NOI18N
+        getContentPane().add(txtDoll20, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 177, 38, -1));
+
+        txtDoll50.setName("txtDoll50"); // NOI18N
+        getContentPane().add(txtDoll50, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 177, 38, -1));
+
+        txtDoll100.setName("txtDoll100"); // NOI18N
+        getContentPane().add(txtDoll100, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 177, 38, -1));
 
         btnAdd.setText("Agregar");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -103,193 +212,98 @@ public class Frame1 extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
+        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 247, -1, -1));
 
         errCent1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errCent1.setForeground(new java.awt.Color(255, 0, 0));
         errCent1.setText("ERROR");
+        errCent1.setName("errCent1"); // NOI18N
+        getContentPane().add(errCent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 126, -1, -1));
 
         errCent5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errCent5.setForeground(new java.awt.Color(255, 0, 0));
         errCent5.setText("ERROR");
+        errCent5.setName("errCent5"); // NOI18N
+        getContentPane().add(errCent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 126, -1, -1));
 
         errCent10.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errCent10.setForeground(new java.awt.Color(255, 0, 0));
         errCent10.setText("ERROR");
+        errCent10.setName("errCent10"); // NOI18N
+        getContentPane().add(errCent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 126, -1, -1));
 
         errCent25.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errCent25.setForeground(new java.awt.Color(255, 0, 0));
         errCent25.setText("ERROR");
+        errCent25.setName("errCent25"); // NOI18N
+        getContentPane().add(errCent25, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 126, -1, -1));
 
         errDoll1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll1.setForeground(new java.awt.Color(255, 0, 0));
         errDoll1.setText("ERROR");
+        errDoll1.setName("errDoll1"); // NOI18N
+        getContentPane().add(errDoll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 126, -1, -1));
 
         errDoll5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll5.setForeground(new java.awt.Color(255, 0, 0));
         errDoll5.setText("ERROR");
+        errDoll5.setName("errDoll5"); // NOI18N
+        getContentPane().add(errDoll5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 203, -1, -1));
 
         errDoll10.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll10.setForeground(new java.awt.Color(255, 0, 0));
         errDoll10.setText("ERROR");
+        errDoll10.setName("errDoll10"); // NOI18N
+        getContentPane().add(errDoll10, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 203, -1, -1));
 
         errDoll20.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll20.setForeground(new java.awt.Color(255, 0, 0));
         errDoll20.setText("ERROR");
+        errDoll20.setName("errDoll20"); // NOI18N
+        getContentPane().add(errDoll20, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 203, -1, -1));
 
         errDoll50.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll50.setForeground(new java.awt.Color(255, 0, 0));
         errDoll50.setText("ERROR");
+        errDoll50.setName("errDoll50"); // NOI18N
+        getContentPane().add(errDoll50, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 203, -1, -1));
 
         errDoll100.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         errDoll100.setForeground(new java.awt.Color(255, 0, 0));
         errDoll100.setText("ERROR");
+        errDoll100.setName("errDoll100"); // NOI18N
+        getContentPane().add(errDoll100, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 203, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addComponent(btnAdd)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(errCent1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(errCent5))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtCent1)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCent5)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCent10))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCent25)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(errCent10)
-                                .addGap(18, 18, 18)
-                                .addComponent(errCent25)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDoll1)
-                            .addComponent(errDoll1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(errDoll5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(errDoll10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(txtDoll5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDoll10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtDoll20, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDoll50, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(errDoll20)
-                                .addGap(18, 18, 18)
-                                .addComponent(errDoll50)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errDoll100)
-                            .addComponent(txtDoll100, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCent5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCent10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCent25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDoll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(errCent1)
-                    .addComponent(errCent5)
-                    .addComponent(errCent10)
-                    .addComponent(errCent25)
-                    .addComponent(errDoll1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDoll5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDoll10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDoll20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDoll50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDoll100, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(errDoll5)
-                    .addComponent(errDoll10)
-                    .addComponent(errDoll20)
-                    .addComponent(errDoll50)
-                    .addComponent(errDoll100))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReturn)
-                    .addComponent(btnAdd)))
-        );
+        jLabel11.setText("Ingrese la cantidad de cada denominación a ingresar.");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 22, -1, -1));
+
+        jLabel12.setText("Para finalizar, presione la tecla \"X\".");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 42, -1, -1));
+
+        btnReset.setText("Reiniciar");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 247, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void hideErrors () {
-        errCent1.setVisible(false);
-        errCent5.setVisible(false);
-        errCent10.setVisible(false);
-        errCent25.setVisible(false);
-        errDoll1.setVisible(false);
-        errDoll5.setVisible(false);
-        errDoll10.setVisible(false);
-        errDoll20.setVisible(false);
-        errDoll50.setVisible(false);
-        errDoll100.setVisible(false);
+        for (String[] component: componentNameList) {
+            map.getComponentByName("err" + component[0]).setVisible(false);
+        }
+    }
+    
+    private void clean () {
+        for (String[] component: componentNameList) {
+            ((JTextField) map.getComponentByName("txt" + component[0])).setText("");
+        }
+        hideErrors();
+        moneyList = new Ej1();
+        JOptionPane.showMessageDialog(this, "Cajero vaciado.");
     }
     
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
@@ -300,28 +314,61 @@ public class Frame1 extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            //Determina si se ingreso un valor invalido
-            boolean hasErrors = false;
+            
+            boolean hasErrors = false;//Determina si se ingreso un valor invalido
+            boolean valueSaved = false;//Determina si se logró guardar un valor
             hideErrors();
             
-            if (!txtCent1.equals("")) {
-                try {
-                    moneyList.add(0.01, Integer.parseInt(txtCent1.getText()));
-                }
-                catch (Exception e) {
-                    errCent1.setVisible(true);
-                    hasErrors = true;
+            for (String[] component: componentNameList){
+                JTextField txt = (JTextField) map.getComponentByName("txt" + component[0]);
+                Component err = map.getComponentByName("err" + component[0]);
+                double denomination = Double.parseDouble(component[1]);
+                
+                if (!txt.getText().equals("")) {
+                    try {
+                        if (Integer.parseInt(txt.getText()) > 0) {
+                            moneyList.add(denomination, Integer.parseInt(txt.getText()));
+                            txt.setText("");
+                            valueSaved = true;
+                        }
+                        else {
+                            throw new Exception ();
+                        }
+                    }
+                    catch (Exception e) {
+                        err.setVisible(true);
+                        hasErrors = true;
+                    }
                 }
             }
             
+            if (hasErrors) {
+                JOptionPane.showMessageDialog(this, "Algunos valores ingresados no son válidos.\nLos valores válidos fueron ingresados.");
+            }
+            
+            else if (valueSaved) {
+                JOptionPane.showMessageDialog(this, "Valores ingresados con éxito.");
+            }
+            
+            else {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un valor.");
+            }
             
                 
         }
-        catch (Exception e) {
+        catch (NumberFormatException | HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Ocurrió un error:\n" + e.getMessage());
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        clean();
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,6 +407,7 @@ public class Frame1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnReturn;
     private javax.swing.JLabel errCent1;
     private javax.swing.JLabel errCent10;
@@ -373,6 +421,8 @@ public class Frame1 extends javax.swing.JFrame {
     private javax.swing.JLabel errDoll50;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
