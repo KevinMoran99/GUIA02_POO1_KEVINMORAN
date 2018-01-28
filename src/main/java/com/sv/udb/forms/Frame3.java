@@ -5,6 +5,12 @@
  */
 package com.sv.udb.forms;
 
+import com.sv.udb.classes.common.ComponentMap;
+import com.sv.udb.classes.ej3.Ej3;
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author Estudiante
@@ -14,8 +20,19 @@ public class Frame3 extends javax.swing.JFrame {
     /**
      * Creates new form Frame3
      */
+    Ej3 pinController;
+    ComponentMap map;
+    ArrayList<String> inputPin;
+    
     public Frame3() {
         initComponents();
+        
+        pinController = new Ej3();
+        
+        map = new ComponentMap(this);
+        
+        inputPin = new ArrayList<>();
+        
     }
 
     /**
@@ -43,8 +60,10 @@ public class Frame3 extends javax.swing.JFrame {
         pin3 = new javax.swing.JRadioButton();
         pin4 = new javax.swing.JRadioButton();
         lblOutput = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnReturn.setText("Regresar");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -52,116 +71,231 @@ public class Frame3 extends javax.swing.JFrame {
                 btnReturnActionPerformed(evt);
             }
         });
+        getContentPane().add(btnReturn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 206, -1, -1));
 
         btn1.setText("1");
+        btn1.setName("btn1"); // NOI18N
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 63, -1, -1));
 
         btn2.setText("2");
+        btn2.setName("btn2"); // NOI18N
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 63, -1, -1));
 
         btn3.setText("3");
+        btn3.setName("btn3"); // NOI18N
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 63, -1, -1));
 
         btn4.setText("4");
+        btn4.setName("btn4"); // NOI18N
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 92, -1, -1));
 
         btn5.setText("5");
+        btn5.setName("btn5"); // NOI18N
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 92, -1, -1));
 
         btn6.setText("6");
+        btn6.setName("btn6"); // NOI18N
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 92, -1, -1));
 
         btn7.setText("7");
+        btn7.setName("btn7"); // NOI18N
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 121, -1, -1));
 
         btn8.setText("8");
+        btn8.setName("btn8"); // NOI18N
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn8ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 121, -1, -1));
 
         btn9.setText("9");
+        btn9.setName("btn9"); // NOI18N
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 121, -1, -1));
 
         btn0.setText("0");
+        btn0.setName("btn0"); // NOI18N
+        btn0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn0ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 150, -1, -1));
 
+        pin1.setEnabled(false);
+        pin1.setFocusable(false);
+        pin1.setName("pin1"); // NOI18N
+        getContentPane().add(pin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 7, -1, -1));
+
+        pin2.setEnabled(false);
+        pin2.setName("pin2"); // NOI18N
+        getContentPane().add(pin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 7, -1, -1));
+
+        pin3.setEnabled(false);
+        pin3.setName("pin3"); // NOI18N
+        getContentPane().add(pin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 7, -1, -1));
+
+        pin4.setEnabled(false);
+        pin4.setName("pin4"); // NOI18N
+        getContentPane().add(pin4, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 7, -1, -1));
+
+        lblOutput.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblOutput.setText("Ingrese su pin");
+        getContentPane().add(lblOutput, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 35, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(btnReturn)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(pin1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pin2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pin3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pin4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn0)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btn8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btn9))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblOutput)))
-                .addGap(140, 233, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pin1)
-                    .addComponent(pin2)
-                    .addComponent(pin3)
-                    .addComponent(pin4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblOutput)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn1)
-                    .addComponent(btn2)
-                    .addComponent(btn3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn4)
-                    .addComponent(btn5)
-                    .addComponent(btn6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn7)
-                    .addComponent(btn8)
-                    .addComponent(btn9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn0)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addComponent(btnReturn))
-        );
+        btnReset.setText("Reiniciar");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReset, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 206, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void enableButtons () {
+        for (int i = 0; i <= 9; i++) 
+            map.getComponentByName("btn" + i).setEnabled(true);
+    }
+    
+    private void disableButtons () {
+        for (int i = 0; i <= 9; i++) 
+            map.getComponentByName("btn" + i).setEnabled(false);
+    }
+    
+    private void selectPinCircle (int index) {
+        ((JRadioButton) map.getComponentByName("pin" + index)).setSelected(true);
+    }
+    
+    private void emptyPinCircles () {
+        for (int i = 1; i <= 4; i++) 
+            ((JRadioButton) map.getComponentByName("pin" + i)).setSelected(false);
+    }
+    
+    private void buttonPressed (String number) {
+        inputPin.add(number);
+        selectPinCircle(inputPin.size());
+        
+        if (inputPin.size() == 4) {
+            String result = pinController.checkPin(inputPin);
+            
+            switch (result) {
+                case "PIN_VALID":
+                    lblOutput.setText("Pin correcto");
+                    lblOutput.setForeground(new Color(0,102,0));
+                    disableButtons();
+                    break;
+                case "PIN_INVALID":
+                    lblOutput.setText("Pin incorrecto, intente de nuevo");
+                    lblOutput.setForeground(new Color(204,0,0));
+                    inputPin = new ArrayList<>();
+                    emptyPinCircles();
+                    break;
+                case "NO_TRIES_LEFT":
+                    lblOutput.setText("Pin incorrecto, número máximo de intentos superado");
+                    lblOutput.setForeground(new Color(128,0,0));
+                    disableButtons();
+                    break;
+            }
+        }
+    }
+    
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         MainFrame menu = new MainFrame();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        pinController.reset();
+        inputPin = new ArrayList<>();
+        lblOutput.setText("Ingrese su pin");
+        lblOutput.setForeground(Color.black);
+        enableButtons();
+        emptyPinCircles();
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        buttonPressed("1");
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        buttonPressed("2");
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        buttonPressed("3");
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        buttonPressed("4");
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        buttonPressed("5");
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        buttonPressed("6");
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        buttonPressed("7");
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        buttonPressed("8");
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        buttonPressed("9");
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
+        buttonPressed("0");
+    }//GEN-LAST:event_btn0ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,6 +343,7 @@ public class Frame3 extends javax.swing.JFrame {
     private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnReturn;
     private javax.swing.JLabel lblOutput;
     private javax.swing.JRadioButton pin1;

@@ -5,16 +5,29 @@
  */
 package com.sv.udb.forms;
 
+import com.sv.udb.classes.ej5.Ej5;
+import com.sv.udb.classes.ej5.ItemPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  *
@@ -27,6 +40,10 @@ public class Frame5 extends javax.swing.JFrame {
      */
     public Frame5() {
         initComponents();
+        refreshList();
+        lblId.setVisible(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
     }
 
     /**
@@ -39,10 +56,18 @@ public class Frame5 extends javax.swing.JFrame {
     private void initComponents() {
 
         btnReturn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        pnlList = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        pnlContainer = new javax.swing.JPanel();
+        txtTitle = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtBody = new javax.swing.JTextArea();
+        lblDate = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,153 +78,299 @@ public class Frame5 extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(100, 200));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        pnlList.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout pnlListLayout = new javax.swing.GroupLayout(pnlList);
+        pnlList.setLayout(pnlListLayout);
+        pnlListLayout.setHorizontalGroup(
+            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 161, Short.MAX_VALUE)
+        );
+        pnlListLayout.setVerticalGroup(
+            pnlListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 223, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(pnlList);
+
+        btnAdd.setText("Crear nueva nota");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        jTextField1.setText("jTextField1");
+        pnlContainer.setBackground(new java.awt.Color(255, 255, 255));
+
+        txtTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtTitle.setBorder(null);
+        txtTitle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTitleActionPerformed(evt);
+            }
+        });
+
+        txtBody.setColumns(20);
+        txtBody.setLineWrap(true);
+        txtBody.setRows(5);
+        txtBody.setBorder(null);
+        jScrollPane1.setViewportView(txtBody);
+
+        btnUpdate.setText("Modificar nota");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Eliminar nota");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnClean.setText("Limpiar");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlContainerLayout = new javax.swing.GroupLayout(pnlContainer);
+        pnlContainer.setLayout(pnlContainerLayout);
+        pnlContainerLayout.setHorizontalGroup(
+            pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContainerLayout.createSequentialGroup()
+                .addComponent(lblId)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnlContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(pnlContainerLayout.createSequentialGroup()
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addComponent(btnClean))
+                    .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtTitle)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDate)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+        pnlContainerLayout.setVerticalGroup(
+            pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlContainerLayout.createSequentialGroup()
+                .addComponent(lblId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
+                    .addComponent(btnClean))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(btnReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(122, 122, 122)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 128, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnReturn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton1)
-                        .addGap(22, 22, 22)))
-                .addComponent(btnReturn))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReturn)
+                    .addComponent(btnAdd)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void clean () {
+        lblId.setText("");
+        txtTitle.setText("");
+        txtBody.setText("");
+        
+        btnAdd.setEnabled(true);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+    
+    private void refreshList () {
+        
+        try {
+            pnlList.removeAll();
+            
+            ArrayList<ItemPanel> itemList = Ej5.read();
+            
+            for (ItemPanel item : itemList) {
+                pnlList.add(item);
+                item.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        lblId.setText(((JLabel)item.getComponent(0)).getText());
+                        txtTitle.setText(((JLabel)item.getComponent(1)).getText());
+                        txtBody.setText(((JLabel)item.getComponent(3)).getText());
+                        
+                        btnAdd.setEnabled(false);
+                        btnUpdate.setEnabled(true);
+                        btnDelete.setEnabled(true);
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {}
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {}
+
+                });
+            }
+            
+            pnlList.setPreferredSize(new Dimension(170, itemList.size() * 71));
+            pnlList.revalidate();
+            pnlList.repaint();
+            jScrollPane2.repaint();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         MainFrame menu = new MainFrame();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        //https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
-        ArrayList<String> lines = new ArrayList<String>();
-        //Read
-        try {
-            //Obteniendo archivo
-            BufferedReader reader = new BufferedReader (new FileReader("C:\\Users\\kevin\\Desktop\\ejemplo.csv"));
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (JOptionPane.showConfirmDialog(this, "¿Desea crear una nueva nota con los datos ingresados?") == JOptionPane.OK_OPTION) {
             
-            //Leyendo cada linea
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line); //Guardando cada linea, en caso de que se use con un writer para hacer CUD
-                JOptionPane.showMessageDialog(this, line);
+            String title, body, date;
+
+            title = txtTitle.getText().trim();
+            body = txtBody.getText().trim();
+            date = String.valueOf(LocalDate.now());
+            
+            if (title.equals("") || title.equals("\",\"")) {
+                JOptionPane.showMessageDialog(this, "Por favor establezca un título para la nota.");
+                return;
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            //Create
-            //Obteniendo archivo, listo para ser reescrito
-            PrintWriter writer = new PrintWriter("C:\\Users\\kevin\\Desktop\\ejemplo.csv");
-            //Construye cadenas de texto
-            StringBuilder builder = new StringBuilder();
-            //Añadiendo las lineas que ya estaban al archivo (pues se reescribira desde 0)
-            for(String line: lines) {
-                builder.append(line);
-                builder.append("\n");
+            if (body.equals("") || body.equals("\",\"")) {
+                JOptionPane.showMessageDialog(this, "Por favor establezca un cuerpo para la nota.");
+                return;
             }
-            //Añadiendo nuevos valores
-            builder.append("hola");
-            builder.append(";");
-            builder.append("hola");
-            builder.append("\n");
-            //Haciendo cambios
-            writer.write(builder.toString());
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            /*//Instanciado browser
-            final JFileChooser browser = new JFileChooser();
-            //Filtando solamente archivos .txt
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-            browser.setFileFilter(filter);
-            
-            //Abriendo browser
-            browser.showOpenDialog(this);
+
             try {
-            //Ruta del objeto seleccionado
-            String path = browser.getSelectedFile().getAbsolutePath();
-            //Extension del archivo
-            String ext = path.substring(path.lastIndexOf("."), path.length());
-            
-            //Validando que se trate de un txt
-            if (!ext.equals(".txt"))
-            throw new Exception();
-            
-            try {
-            //Modelo del jList de output
-            DefaultListModel listModel = new DefaultListModel();
-            
-            //Lee el archivo seleccionado
-            BufferedReader reader = new BufferedReader(new FileReader(path));
-            //Recorre cada linea del archivo, desconcatenándola y determinando las iniciales
-            String line;
-            while((line = reader.readLine()) != null)
-            listModel.addElement(NameParser.deconcatenate(line));
-            
-            
-            //Actualizando y mostrando lista
-            lstOutput_2.setModel(listModel);
-            lblInitials_2.setVisible(true);
-            scrollOutput_2.setVisible(true);
-            this.repaint();
-            
-            } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "No se encontró el archivo especificado.");
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Ej5.create(title, body, date);
+                JOptionPane.showMessageDialog(this, "Nota registrada.");
+                clean();
             } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.");
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la nota.");
             }
+
+            refreshList();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if (JOptionPane.showConfirmDialog(this, "¿Desea modificar la nota?") == JOptionPane.OK_OPTION) {
             
-            } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Por favor seleccione un archivo txt.");
-            }*/
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+            String title, body, date, index;
+
+            index = lblId.getText();
+            title = txtTitle.getText().trim();
+            body = txtBody.getText().trim();
+            date = String.valueOf(LocalDate.now());
+            
+            if (index.equals("")) {
+                JOptionPane.showMessageDialog(this, "Por favor elija una nota.");
+                return;
+            }
+            if (title.equals("") || title.equals("\",\"")) {
+                JOptionPane.showMessageDialog(this, "Por favor establezca un título para la nota.");
+                return;
+            }
+            if (body.equals("") || body.equals("\",\"")) {
+                JOptionPane.showMessageDialog(this, "Por favor establezca un cuerpo para la nota.");
+                return;
+            }
+
+            try {
+                Ej5.update(title, body, date, index);
+                JOptionPane.showMessageDialog(this, "Nota modificada.");
+                clean();
+            } catch (IOException ex) {
+                Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al modificar la nota.");
+            }
+
+            refreshList();
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (JOptionPane.showConfirmDialog(this, "¿Desea eliminar la nota? Esta acción no puede revertirse.") == JOptionPane.OK_OPTION) {
+            
+            String index;
+
+            index = lblId.getText();
+            
+            if (index.equals("")) {
+                JOptionPane.showMessageDialog(this, "Por favor elija una nota.");
+                return;
+            }
+
+            try {
+                Ej5.delete(index);
+                JOptionPane.showMessageDialog(this, "Nota eliminada.");
+                clean();
+            } catch (IOException ex) {
+                Logger.getLogger(Frame5.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ocurrió un error al eliminar la nota.");
+            }
+
+            refreshList();
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        clean();
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void txtTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTitleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,10 +408,18 @@ public class Frame5 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnReturn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JPanel pnlContainer;
+    private javax.swing.JPanel pnlList;
+    private javax.swing.JTextArea txtBody;
+    private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }

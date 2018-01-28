@@ -49,8 +49,18 @@ public class Frame2 extends javax.swing.JFrame {
         });
 
         btn2.setText("Figura #2");
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
 
         btn3.setText("Figura #3");
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,10 +106,26 @@ public class Frame2 extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
+    private boolean figure1Pattern (int i) {
+        return (i % 6 >= 4 || i % 6 == 0);
+    }
+    
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         for (int i = 1; i <= 24; i++) {
             for (int j = 1; j <= 24; j++) {
-                System.out.print("*");
+                if (figure1Pattern(i)) {
+                    if (figure1Pattern(j))
+                        System.out.print(" ");
+                    else
+                        System.out.print("*");
+                }
+                else {
+                    if (figure1Pattern(j))
+                        System.out.print("*");
+                    else
+                        System.out.print(" ");
+                }
+                System.out.print(" "); //Espaciado para que se vea bonito
             }
             System.out.println();
         }
@@ -107,6 +133,56 @@ public class Frame2 extends javax.swing.JFrame {
         delimitate();
         
     }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        for (int i = 1; i <= 10; i++) {
+            int j = 10; //Valor de coordenada x
+            int acum = i; //Valor a imprimir
+            boolean isInMiddle = false; //Indica si el patron llego a la mitad de la fila
+            while (j <= 10) {
+                
+                if (j == 1) 
+                    isInMiddle = true;
+                
+                if (j <= i) {
+                    System.out.print(acum < 10 ? acum : acum - 10); //Si el valor es mayor a 10, se le restaran 10
+                    
+                    acum = isInMiddle ? acum - 1 : acum + 1;
+                }
+                else 
+                    System.out.print(" ");
+                
+                //j Comenzara disminuyendo. Cuando llegue a la mitad de la fila, comenzara a aumentar
+                j = isInMiddle ? j + 1 : j - 1;
+            }
+            System.out.println();
+        }
+        
+        delimitate();
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        for (int i = 1; i <= 8; i++) {
+            for (int j = 1; j <= 8; j++) {
+                if (i % 2 == 0) {
+                    if (j % 2 == 0)
+                        System.out.print(" ");
+                    else
+                        System.out.print("*");
+                }
+                else {
+                    if (j % 2 == 0)
+                        System.out.print("*");
+                    else
+                        System.out.print(" ");
+                }
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        
+        delimitate();
+    }//GEN-LAST:event_btn3ActionPerformed
 
     /**
      * @param args the command line arguments
